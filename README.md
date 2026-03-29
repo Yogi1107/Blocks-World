@@ -198,7 +198,3 @@ Use the slider or buttons to adjust animation speed at any time during playback.
 - 3D visualization
 
 ---
-
-## License
-
-This project is intended for educational use. See [LICENSE](LICENSE) for details.
