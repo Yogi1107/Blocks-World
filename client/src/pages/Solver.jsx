@@ -12,7 +12,7 @@ export default function Solver() {
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-extrabold text-white">
-          Algorithm <span className="text-indigo-400">Solver</span>
+          Blocks World <span className="text-indigo-400">Solver</span>
         </h1>
         <p className="text-gray-500 mt-1 text-sm">
           Define your block states and watch BFS & DFS solve it in real time.

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import AlgoPanel       from './AlgoPanel'
+import AlgoPanel        from './AlgoPanel'
 import PlaybackControls from './PlaybackControls'
-import TreeView        from './TreeView'
+import TreeView         from './TreeView'
 
 export default function SplitScreen({ bfsSteps, dfsSteps, goalState, bfsTree, dfsTree }) {
   const [currentStep, setCurrentStep] = useState(0)
@@ -12,6 +12,7 @@ export default function SplitScreen({ bfsSteps, dfsSteps, goalState, bfsTree, df
   const totalSteps = Math.max(bfsSteps.length, dfsSteps.length)
 
   useEffect(() => {
+    clearInterval(intervalRef.current)
     if (isPlaying) {
       intervalRef.current = setInterval(() => {
         setCurrentStep(prev => {
@@ -30,31 +31,16 @@ export default function SplitScreen({ bfsSteps, dfsSteps, goalState, bfsTree, df
 
   return (
     <div className="flex flex-col gap-4 mt-6">
-
-      {/* Split panels */}
       <div className="flex gap-4">
-        <AlgoPanel
-          title="BFS — Breadth First Search"
-          color="blue"
-          steps={bfsSteps}
-          currentStep={currentStep}
-          goalState={goalState}
-        />
-        <AlgoPanel
-          title="DFS — Depth First Search"
-          color="violet"
-          steps={dfsSteps}
-          currentStep={currentStep}
-          goalState={goalState}
-        />
+        <AlgoPanel title="BFS — Breadth First Search" color="blue"   steps={bfsSteps} currentStep={currentStep} goalState={goalState} />
+        <AlgoPanel title="DFS — Depth First Search"   color="violet" steps={dfsSteps} currentStep={currentStep} goalState={goalState} />
       </div>
 
-      {/* Playback controls */}
       <PlaybackControls
         isPlaying={isPlaying}
-        onPlay={()        => setIsPlaying(true)}
-        onPause={()       => setIsPlaying(false)}
-        onReset={()       => { setIsPlaying(false); setCurrentStep(0) }}
+        onPlay={()         => setIsPlaying(true)}
+        onPause={()        => setIsPlaying(false)}
+        onReset={()        => { setIsPlaying(false); setCurrentStep(0) }}
         onStepForward={()  => setCurrentStep(s => Math.min(s + 1, totalSteps - 1))}
         onStepBack={()     => setCurrentStep(s => Math.max(s - 1, 0))}
         speed={speed}
@@ -63,46 +49,25 @@ export default function SplitScreen({ bfsSteps, dfsSteps, goalState, bfsTree, df
         totalSteps={totalSteps}
       />
 
-      {/* Search trees */}
       {(bfsTree || dfsTree) && (
         <div className="flex flex-col gap-4 mt-2">
-          <h3 className="text-white font-bold text-base">
-            Search <span className="text-indigo-400">Trees</span>
-          </h3>
+          <h3 className="text-white font-bold text-base">Search <span className="text-indigo-400">Trees</span></h3>
           <div className="flex gap-4">
-
             {bfsTree && (
               <div className="flex-1">
-                <p className="text-xs text-blue-400 font-semibold uppercase tracking-widest mb-2">
-                  BFS Tree
-                </p>
-                <TreeView
-                  treeNodes={bfsTree}
-                  currentStep={currentStep}
-                  steps={bfsSteps}
-                  color="blue"
-                />
+                <p className="text-xs text-blue-400 font-semibold uppercase tracking-widest mb-2">BFS Tree</p>
+                <TreeView treeNodes={bfsTree} currentStep={currentStep} steps={bfsSteps} color="blue" />
               </div>
             )}
-
             {dfsTree && (
               <div className="flex-1">
-                <p className="text-xs text-violet-400 font-semibold uppercase tracking-widest mb-2">
-                  DFS Tree
-                </p>
-                <TreeView
-                  treeNodes={dfsTree}
-                  currentStep={currentStep}
-                  steps={dfsSteps}
-                  color="violet"
-                />
+                <p className="text-xs text-violet-400 font-semibold uppercase tracking-widest mb-2">DFS Tree</p>
+                <TreeView treeNodes={dfsTree} currentStep={currentStep} steps={dfsSteps} color="violet" />
               </div>
             )}
-
           </div>
         </div>
       )}
-
     </div>
   )
 }

@@ -1,0 +1,6 @@
+# Ignore Word temp files
+~$*
+
+# Ignore Word documents
+*.doc
+*.docx
