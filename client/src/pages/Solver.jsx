@@ -35,7 +35,7 @@ export default function Solver() {
       {isError && (
         <div className="mt-6 bg-red-950 border border-red-700 text-red-300
                         rounded-xl px-5 py-4 text-sm">
-          <p className="font-bold mb-1">❌ Error</p>
+          <p className="font-bold mb-1">Error</p>
           <p>{error}</p>
           <p className="text-red-500 mt-2 text-xs">
             Make sure the backend server is running on port 5000.
