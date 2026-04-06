@@ -6,7 +6,7 @@ export default function Navbar({ activePath = '/solver' }) {
 
   return (
     <nav className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between">
-      <span className="text-xl font-bold text-indigo-400 tracking-tight">🧱 BlocksWorld</span>
+      <span className="text-xl font-bold text-indigo-400 tracking-tight">BlocksWorld</span>
       <div className="flex gap-6">
         {links.map(({ path, label }) => (
           <a

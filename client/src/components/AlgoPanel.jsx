@@ -6,7 +6,7 @@ export default function AlgoPanel({ title, color, steps, currentStep, goalState 
 
   const step = steps[Math.min(currentStep, steps.length - 1)]
   const accent = color === 'blue' ? 'border-blue-500 text-blue-400' : 'border-violet-500 text-violet-400'
-  const badge  = color === 'blue' ? 'bg-blue-900 text-blue-300'      : 'bg-violet-900 text-violet-300'
+  const badge = color === 'blue' ? 'bg-blue-900 text-blue-300' : 'bg-violet-900 text-violet-300'
 
   return (
     <div className={`flex-1 bg-gray-900 border-t-4 ${accent} rounded-xl p-5 flex flex-col gap-4`}>
@@ -40,15 +40,23 @@ export default function AlgoPanel({ title, color, steps, currentStep, goalState 
       {/* Queue / Stack */}
       <div>
         <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">
-          {color === 'blue' ? '📋 Queue (BFS)' : '📚 Stack (DFS)'}
+          {color === 'blue' ? 'Queue (BFS)' : 'Stack (DFS)'}
         </p>
         <div className="bg-gray-950 rounded-lg p-3 max-h-24 overflow-y-auto">
           {step.dataStructure.length === 0 ? (
             <span className="text-gray-600 text-xs">Empty</span>
           ) : (
-            step.dataStructure.map((entry, i) => (
-              <div key={i} className={`text-xs font-mono truncate ${i === 0 ? `font-bold ${accent}` : 'text-gray-400'}`}>
-                {i === 0 ? `${entry} ← front` : entry}
+            // Reverse for DFS so the top of the stack is first
+            [...(color === 'blue' ? step.dataStructure : step.dataStructure)].reverse().map((entry, i) => (
+              <div
+                key={i}
+                className={`text-xs font-mono truncate ${i === 0 ? `font-bold ${accent}` : 'text-gray-400'}`}
+              >
+                {i === 0
+                  ? color === 'blue'
+                    ? `${entry} ← front`
+                    : `${entry} ← top`
+                  : entry}
               </div>
             ))
           )}

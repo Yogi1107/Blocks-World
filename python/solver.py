@@ -114,7 +114,7 @@ def bfs(initial_state, goal_state):
             steps.append({
                 "stepIndex": len(steps),
                 "state": current_state,
-                "move": "✅ Goal Reached!",
+                "move": "Goal Reached!",
                 "dataStructure": [],
                 "treeNode": state_to_node_id.get(state_to_key(current_state))
             })
@@ -162,32 +162,30 @@ def bfs(initial_state, goal_state):
 
 def dfs(initial_state, goal_state):
     """
-    Depth-First Search — explores depth-first using a Stack (list).
-
-    Same return structure as BFS.
+    Depth-First Search (DFS) without backtracking:
+    - Explores a single path until goal or dead-end.
+    - Returns steps and tree_nodes for visualization.
     """
+    # Initialize
+    path_stack = [initial_state]
     steps = []
-    visited = set()
-
-    # Stack items: (current_state, history)
-    stack = [(initial_state, [])]
-    visited.add(state_to_key(initial_state))
+    visited = {state_to_key(initial_state)}
 
     node_id_counter = [0]
-
     def next_id():
         node_id_counter[0] += 1
-        return node_id_counter[0]
+        return str(node_id_counter[0])
 
-    tree_nodes = []
+    # Initialize tree
     root_id = next_id()
-    tree_nodes.append({
-        "id": str(root_id),
+    tree_nodes = [{
+        "id": root_id,
         "parentId": None,
         "state": initial_state,
         "move": "Start"
-    })
+    }]
 
+    # Initial step
     steps.append({
         "stepIndex": 0,
         "state": initial_state,
@@ -196,52 +194,73 @@ def dfs(initial_state, goal_state):
         "treeNode": tree_nodes[-1]
     })
 
-    state_to_node_id = {state_to_key(initial_state): str(root_id)}
+    current_state = initial_state
+    parent_id = root_id
+    goal_reached = False
 
-    while stack:
-        current_state, history = stack.pop()   # pop from END = stack behaviour
-
+    # DFS loop
+    while True:
         if states_equal(current_state, goal_state):
             steps.append({
                 "stepIndex": len(steps),
                 "state": current_state,
-                "move": "✅ Goal Reached!",
+                "move": "Goal Reached!",
                 "dataStructure": [],
-                "treeNode": state_to_node_id.get(state_to_key(current_state))
+                "treeNode": parent_id
             })
+            goal_reached = True
             break
 
-        for from_idx, to_idx, block in get_possible_moves(current_state):
-            new_state = apply_move(current_state, from_idx, to_idx)
-            key = state_to_key(new_state)
+        # Get valid moves
+        possible_moves = [
+            (f, t, b)
+            for f, t, b in get_possible_moves(current_state)
+            if state_to_key(apply_move(current_state, f, t)) not in visited
+        ]
 
-            if key in visited:
-                continue
+        if not possible_moves:
+            # Dead-end reached
+            break
 
-            visited.add(key)
+        # Take the first available move
+        from_idx, to_idx, block = possible_moves[0]
+        new_state = apply_move(current_state, from_idx, to_idx)
+        key = state_to_key(new_state)
+        visited.add(key)
 
-            move_desc = describe_move(block, from_idx, to_idx)
+        move_desc = describe_move(block, from_idx, to_idx)
+        node_id = next_id()
+        tree_node = {
+            "id": node_id,
+            "parentId": parent_id,
+            "state": new_state,
+            "move": move_desc
+        }
+        tree_nodes.append(tree_node)
+        parent_id = node_id
 
-            parent_id = state_to_node_id.get(state_to_key(current_state))
-            node_id = str(next_id())
-            tree_node = {
-                "id": node_id,
-                "parentId": parent_id,
-                "state": new_state,
-                "move": move_desc
-            }
-            tree_nodes.append(tree_node)
-            state_to_node_id[key] = node_id
+        # Add step with current DFS path as stack
+        steps.append({
+            "stepIndex": len(steps),
+            "state": new_state,
+            "move": move_desc,
+            "dataStructure": [state_to_key(s) for s in path_stack],
+            "treeNode": tree_node
+        })
 
-            stack.append((new_state, history + [move_desc]))
+        # Update current state and stack
+        current_state = new_state
+        path_stack.append(new_state)
 
-            steps.append({
-                "stepIndex": len(steps),
-                "state": new_state,
-                "move": move_desc,
-                "dataStructure": [state_to_key(s) for s, _ in stack[-5:][::-1]],
-                "treeNode": tree_node
-            })
+    # If goal not reached, show failure message
+    if not goal_reached:
+        steps.append({
+            "stepIndex": len(steps),
+            "state": current_state,
+            "move": "DFS failed to reach the goal (dead-end reached)",
+            "dataStructure": [state_to_key(s) for s in path_stack],
+            "treeNode": None
+        })
 
     return steps, tree_nodes
 

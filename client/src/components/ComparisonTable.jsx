@@ -2,8 +2,8 @@ const THEORETICAL = [
   { metric: 'Data Structure',   bfs: 'Queue (FIFO)',        dfs: 'Stack (LIFO)'       },
   { metric: 'Time Complexity',  bfs: 'O(bᵈ)',               dfs: 'O(bᵐ)'              },
   { metric: 'Space Complexity', bfs: 'O(bᵈ)',               dfs: 'O(b·m)'             },
-  { metric: 'Completeness',     bfs: '✅ Yes',              dfs: '❌ No'               },
-  { metric: 'Optimality',       bfs: '✅ Yes',              dfs: '❌ No'               },
+  { metric: 'Completeness',     bfs: 'Yes',              dfs: 'No'               },
+  { metric: 'Optimality',       bfs: 'Yes',              dfs: 'No'               },
   { metric: 'Search Order',     bfs: 'Level by level',      dfs: 'Deepest path first' },
   { metric: 'Memory Usage',     bfs: 'High (stores level)', dfs: 'Low (stores path)'  },
 ]
@@ -66,17 +66,14 @@ export default function ComparisonTable({ metrics }) {
               { label: 'Metric', cls: 'text-left text-gray-400 w-44' },
               { label: 'BFS',    cls: 'text-center text-blue-400'    },
               { label: 'DFS',    cls: 'text-center text-violet-400'  },
-              { label: 'Winner', cls: 'text-center text-gray-400'    },
             ]}
             rows={[
               ['Steps Taken',
                 metrics.bfsStepsCount,
-                metrics.dfsStepsCount,
-                metrics.bfsStepsCount <= metrics.dfsStepsCount ? '🏆 BFS' : '🏆 DFS'],
+                metrics.dfsStepsCount],
               ['Tree Nodes Generated',
                 metrics.bfsTreeNodes,
-                metrics.dfsTreeNodes,
-                metrics.bfsTreeNodes <= metrics.dfsTreeNodes ? '🏆 BFS' : '🏆 DFS'],
+                metrics.dfsTreeNodes],
             ]}
           />
         </div>

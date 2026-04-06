@@ -73,7 +73,7 @@ export default function InputForm() {
 
       {error && (
         <div className="bg-red-950 border border-red-700 text-red-300 text-sm rounded-lg px-4 py-3 mb-4">
-          ⚠️ {error}
+          {error}
         </div>
       )}
 
@@ -84,7 +84,7 @@ export default function InputForm() {
           className="flex-1 bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-900
                      disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition text-sm"
         >
-          {isLoading ? '⏳ Running algorithms...' : '▶ Solve'}
+          {isLoading ? 'Running algorithms...' : 'Solve'}
         </button>
         <button
           onClick={handleReset}
