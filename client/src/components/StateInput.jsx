@@ -36,15 +36,16 @@ export default function StateInput({ label, value, onChange }) {
 
             <div className="w-full h-0.5 bg-gray-600 rounded" />
 
-            <button
-              onClick={() => removeTop(pegIdx)}
-              disabled={peg.length === 0}
-              className="text-xs text-red-400 hover:text-red-300 disabled:text-gray-700 disabled:cursor-not-allowed"
-            >
-              Remove top
-            </button>
+
 
             <div className="flex gap-1 w-full">
+
+              <button
+              onClick={() => removeTop(pegIdx)}
+              disabled={peg.length === 0}
+              className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs rounded-md px-2 font-bold disabled:cursor-not-allowed"
+            >-</button>
+
               <input
                 type="text" maxLength={1}
                 value={inputs[pegIdx]}
