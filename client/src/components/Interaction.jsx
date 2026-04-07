@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import StateInput from './StateInput'
 import { useSolver } from '../context/SolverContext'
+import { FaPlay } from "react-icons/fa";
+
 
 const emptyState  = () => [[], [], []]
 const DEMO_INITIAL = [['A', 'B'], ['C'], []]
 const DEMO_GOAL    = [['A'], ['B', 'C'], []]
 
-export default function InputForm() {
+export default function Interaction() {
   const { solve, isLoading, loadExample } = useSolver()
 
   const [initialState, setInitialState] = useState(emptyState())
@@ -58,12 +60,35 @@ export default function InputForm() {
     <div className="bg-gray-950 border border-gray-800 rounded-2xl p-6">
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-lg font-bold text-white">Configure States</h2>
+        
+        <div className="flex gap-4 items-center">
+          <div className="border border-gray-600 hover:border-gray-400 p-2 rounded-2xl">
+        <FaPlay
+          onClick={handleSolve}
+          disabled={isLoading}
+          className=""
+        >
+          {/* {isLoading ? 'Running algorithms...' : 'Solve'} */}
+        </FaPlay>
+        </div>
+        <button
+          onClick={handleReset}
+          className="border border-gray-600 hover:border-gray-400 text-gray-300
+                     font-semibold px-5 py-3 rounded-xl transition text-sm"
+        >
+          Reset
+        </button>
+        
+        
+        
         <button
           onClick={handleLoadDemo}
           className="text-xs bg-amber-600 hover:bg-amber-500 text-white font-semibold px-3 py-1.5 rounded-lg transition"
         >
           Load Demo
         </button>
+
+        </div>
       </div>
 
       <div className="flex gap-4 mb-5">
@@ -77,23 +102,6 @@ export default function InputForm() {
         </div>
       )}
 
-      <div className="flex gap-3">
-        <button
-          onClick={handleSolve}
-          disabled={isLoading}
-          className="flex-1 bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-900
-                     disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition text-sm"
-        >
-          {isLoading ? 'Running algorithms...' : 'Solve'}
-        </button>
-        <button
-          onClick={handleReset}
-          className="border border-gray-600 hover:border-gray-400 text-gray-300
-                     font-semibold px-5 py-3 rounded-xl transition text-sm"
-        >
-          Reset
-        </button>
-      </div>
     </div>
   )
 }

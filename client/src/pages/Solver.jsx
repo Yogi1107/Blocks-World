@@ -1,4 +1,4 @@
-import InputForm from '../components/InputForm'
+import Interaction from '../components/Interaction'
 import SplitScreen from '../components/SplitScreen'
 import ComparisonTable from '../components/ComparisonTable'
 import { useSolver } from '../context/SolverContext'
@@ -7,7 +7,7 @@ export default function Solver() {
   const { result, inputStates, isLoading, isError, error, status } = useSolver()
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8">
+    <div className="max-w-6xl mx-auto py-8">
 
       {/* Header */}
       <div className="mb-6">
@@ -20,7 +20,7 @@ export default function Solver() {
       </div>
 
       {/* Input form */}
-      <InputForm />
+      <Interaction />
 
       {/* Loading */}
       {isLoading && (
@@ -46,12 +46,13 @@ export default function Solver() {
       {/* Results */}
       {status === 'success' && result && inputStates && (
         <>
-          {/* Metrics bar */}
+          {/* Metrics bar(Count bar) */}
           <div className="mt-6 grid grid-cols-4 gap-3">
             {[
               { label: 'BFS Steps', value: result.metrics.bfsStepsCount },
-              { label: 'DFS Steps', value: result.metrics.dfsStepsCount },
               { label: 'BFS Tree Nodes', value: result.metrics.bfsTreeNodes },
+              { label: 'DFS Steps', value: result.metrics.dfsStepsCount },
+              
               { label: 'DFS Tree Nodes', value: result.metrics.dfsTreeNodes },
             ].map(({ label, value }) => (
               <div key={label}
@@ -62,7 +63,7 @@ export default function Solver() {
             ))}
           </div>
 
-          {/* Split screen */}
+          {/* Split screen(Main op segment) */}
           <SplitScreen
             bfsSteps={result.bfs.steps}
             dfsSteps={result.dfs.steps}
