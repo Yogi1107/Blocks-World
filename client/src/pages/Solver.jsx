@@ -43,7 +43,7 @@ export default function Solver() {
         </div>
       )}
 
-      {/* Results */}
+      {/* Results - depends on op of the Context that is availed from api call in utils */}
       {status === 'success' && result && inputStates && (
         <>
           {/* Metrics bar(Count bar) */}

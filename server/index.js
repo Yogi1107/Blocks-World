@@ -1,8 +1,7 @@
-import express   from 'express'
-import cors      from 'cors'
-import dotenv    from 'dotenv'
-import connectDB from './config/db.js'
-import solverRoutes from './routes/solverRoutes.js'
+import express        from 'express'
+import cors           from 'cors'
+import dotenv         from 'dotenv'
+import solverRoutes   from './routes/solverRoutes.js'
 
 dotenv.config()
 
@@ -33,9 +32,7 @@ app.use((err, req, res, next) => {
 })
 
 // ── Start ────────────────────────────────────
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`)
-    console.log(`📡 API ready at http://localhost:${PORT}/api`)
-  })
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`)
+  console.log(`API ready at http://localhost:${PORT}/api`)
 })

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
+// import Navbar from './components/Navbar'
+//import TreeView from './components/TreeView'
 import Solver from './pages/Solver'
-import TreeView from './components/TreeView'
 import TreeRepresentation from './pages/TreeRepresentation'
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Solver></Solver>}/>
               <Route path="/tree_representation" element={<TreeRepresentation/>}/>
-              {/* <Route path="*" element={<Solver></Solver>}/> */}
+              <Route path="*" element={<Solver></Solver>}/>
             </Routes>
 
           </Router>
